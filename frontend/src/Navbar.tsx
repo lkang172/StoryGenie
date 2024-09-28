@@ -26,12 +26,12 @@ const Navbar = () => {
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link className="nav-link active" to="/">
-                  Home
+                  HOME
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="create">
-                  Create
+                <Link className="nav-link active" to="create">
+                  CREATE
                 </Link>
               </li>
             </ul>
