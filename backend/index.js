@@ -164,7 +164,7 @@ const generateStory = async (theme, lessons) => {
       maxTokens: 600,
       temperature: 0.4,
     });
-    // console.log(response);
+    //console.log(response);
     return response.generations[0].text;
   } catch (error) {
     console.error("Error:", error);
@@ -255,7 +255,7 @@ const generateCharacters = async (story) => {
           role: splitPrompt[1],
         };
       });
-    // console.log(result);
+    //console.log(result);
     return result;
   } catch (error) {
     console.error("Error:", error);
@@ -502,41 +502,12 @@ const generateTitle = async (story) => {
     });
     const title = response.generations[0].text;
     const extractedTitle = title.substring(8, title.length);
-    // console.log(extractedTitle);
+    //console.log(extractedTitle);
     return extractedTitle;
   } catch (error) {
     console.error("Error:", error);
   }
 };
-
-app.get("/api/user/:userId", async (req, res) => {
-  try {
-    const userId = req.params.userId;
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.json({ username: user.username, name: user.name, books: user.books });
-    console.log("Sending user data:", user);
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-app.get("/api/books/:userId", async (req, res) => {
-  try {
-    const userId = req.params.userId;
-    const user = await User.findById(userId).populate('books');
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    res.json(user.books);
-  } catch (error) {
-    console.error("Error fetching books:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 const generateStoryScenes = async (scenes, story) => {
   const prompt = `You're bot whose great at extracting sentences from a story that visually depict a given scene.
@@ -609,6 +580,35 @@ const generateStoryScenes = async (scenes, story) => {
     console.error("Error:", error);
   }
 };
+
+app.get("/api/user/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ username: user.username, name: user.name, books: user.books });
+    console.log("Sending user data:", user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/books/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId).populate('books');
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user.books);
+  } catch (error) {
+    console.error("Error fetching books:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 const splitSentencesPerPage = async (story, numPages) => {
   const sentences = story.match(/[^\.!\?]+[\.!\?]+/g);

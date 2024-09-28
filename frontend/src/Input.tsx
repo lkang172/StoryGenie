@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import './Input.css';
+import React, { useState } from "react";
+import "./Input.css";
+import { useNavigate } from "react-router-dom";
 
 interface InputData {
   theme: string;
@@ -8,13 +9,16 @@ interface InputData {
 
 const Input: React.FC = () => {
   const [inputData, setInputData] = useState<InputData>({
-    theme: '',
-    lesson: '',
+    theme: "",
+    lesson: "",
   });
+
+  // Call useNavigate here, at the top of the component
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputData(prevData => ({
+    setInputData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -23,11 +27,14 @@ const Input: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Here you can add the logic to handle the storybook generation
-    console.log('Theme:', inputData.theme);
-    console.log('Lesson:', inputData.lesson);
-    
+    console.log("Theme:", inputData.theme);
+    console.log("Lesson:", inputData.lesson);
+
+    // Navigate to the Loading page after handling input
+    navigate("/loading");
+
     // You can replace this with your own logic to generate the storybook
-    alert('Storybook generated! Check the console for details.');
+    alert("Storybook generated! Check the console for details.");
   };
 
   return (
@@ -55,10 +62,12 @@ const Input: React.FC = () => {
             value={inputData.lesson}
             onChange={handleInputChange}
             required
-            placeholder="e.g. Kindess is contagious, Be the change in the world"
+            placeholder="e.g. Kindness is contagious, Be the change in the world"
           />
         </div>
-        <button className="button" type="submit">Generate</button>
+        <button className="button" type="submit">
+          Generate
+        </button>
       </form>
     </div>
   );
