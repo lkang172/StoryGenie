@@ -73,9 +73,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         />
         <h1 className="profile-name">Welcome, {userData.username}</h1>
         <p className="profile-username">@{userData.username}</p>
-        <p className="profile-bio">
-          A passionate storyteller and children's book author.
-        </p>
+        <p className="profile-bio">Where will your story take you?</p>
       </div>
       <div className="books-container">
         <h2 className="books-title">My Books</h2>
