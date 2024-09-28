@@ -9,6 +9,7 @@
   --text-color: #2D1E2F;
   --light-gray: #E9ECEF;
   --dark-gray: #6C757D;
+  --bookshelf-color: #8B4513; /* Brown color for the bookshelf */
 }
 
 body {
@@ -135,4 +136,27 @@ body {
   background-color: var(--tertiary-color);
   border-radius: 50%;
   opacity: 0.1;
+}
+
+/* Bookshelf */
+.bookshelf {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background-color: var(--bookshelf-color);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+/* Add some depth to the bookshelf */
+.bookshelf::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
 }
