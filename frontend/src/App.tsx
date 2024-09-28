@@ -24,35 +24,29 @@ function App() {
   };
 
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/login"
-          element={
-            user ? <Navigate to="/profile" /> : <Login onLogin={handleLogin} />
-          }
-        />
-        <Route
-          path="/create"
-          element={user ? <Create user={user} /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/profile"
-          element={user ? <Profile user={user} /> : <Navigate to="/login" />}
-        />
-      </Routes>
-    </Router>
     <>
       <Router>
-        <Navbar></Navbar>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route path="/output" element={<Output />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/login"
+            element={
+              user ? (
+                <Navigate to="/profile" />
+              ) : (
+                <Login onLogin={handleLogin} />
+              )
+            }
+          />
+          <Route
+            path="/create"
+            element={user ? <Create user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile"
+            element={user ? <Profile user={user} /> : <Navigate to="/login" />}
+          />
         </Routes>
       </Router>
     </>
