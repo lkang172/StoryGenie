@@ -1,5 +1,3 @@
-import React from 'react';
-import './Profile.css';
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
 

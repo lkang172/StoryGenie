@@ -3,7 +3,10 @@ import './Loading.css';
 
 const Loading = () => {
   return (
-    <h1>test</h1>
+    <div className="loading-container">
+      <h2 className="h2Home">Loading...</h2>
+      <div className="spinner"></div>
+    </div>
   );
 };
 
