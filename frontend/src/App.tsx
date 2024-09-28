@@ -12,9 +12,9 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Create from "./Create";
 import Login from "./Login";
+import "./App.css";
 import Loading from "./Loading";
 import Output from "./Output";
-import "./App.css";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -47,6 +47,8 @@ function App() {
             path="/profile"
             element={user ? <Profile user={user} /> : <Navigate to="/login" />}
           />
+          {/*<Route path="/loading" element={<Loading />} />
+          <Route path="/output" element={<Output />} />*/}
         </Routes>
       </Router>
     </>
