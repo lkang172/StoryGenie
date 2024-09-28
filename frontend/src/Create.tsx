@@ -1,12 +1,11 @@
 import Input from "./Input.tsx";
 
 const Create = () => {
-  return(
+  return (
     <>
-    <Input></Input>
+      <Input></Input>
     </>
-
-  )
+  );
 };
 
 export default Create;

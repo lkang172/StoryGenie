@@ -18,13 +18,12 @@ body {
   background-color: var(--background-color);
 }
 
-.input-container {
+.home-container {
   max-width: 1100px;
   min-height: 550px;
   margin: 0 auto;
   margin-top: 30px;
   padding: 40px;
-  background-color: white;
   border-radius: 15px;
   box-shadow: 0 0 25px rgba(138, 79, 255, 0.1);
   position: relative;
@@ -34,7 +33,7 @@ body {
 
 h1 {
   text-align: center;
-  color: black;
+  color: var(--background-color);
   font-size: 2.5em;
   font-weight: 700;
   margin-bottom: 30px;
