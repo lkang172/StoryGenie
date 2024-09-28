@@ -1,10 +1,11 @@
 import Navbar from "./Navbar";
+import "./Home.css";
 
 const Home = () => {
   return (
-    <>
-    <Navbar></Navbar>
-    </>
+    <div className="body">
+      <h1>Home</h1>
+    </div>
   );
 };
 

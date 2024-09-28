@@ -3,5 +3,16 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    // other options...
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types" // Ensure this line is here to include your custom types
+    ],
+    "baseUrl": "./", // Optional: Set a base URL for module resolution
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"] // Optional: Adjust path resolution
+    }
+  }
 }
