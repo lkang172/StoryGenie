@@ -1,9 +1,20 @@
-import Input from "./Input.tsx";
+import React from "react";
+import Input from "./Input";
 
-const Create = () => {
+interface User {
+  // Define the User type here
+  username: string;
+  // Add other user properties as needed
+}
+
+interface CreateProps {
+  user: User | null;
+}
+
+const Create: React.FC<CreateProps> = ({ user }) => {
   return (
     <>
-      <Input></Input>
+      <Input />
     </>
   );
 };

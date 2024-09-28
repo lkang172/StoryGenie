@@ -14,12 +14,13 @@ const UserSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     books: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Books",
+        required: false,
       },
     ],
   },

@@ -9,15 +9,15 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          <img 
-            src={logo}  
-              alt="StoryGenie Logo" 
-              height="30" 
+          <a className="navbar-brand" href="#">
+            <img
+              src={logo}
+              alt="StoryGenie Logo"
+              height="30"
               className="d-inline-block align-top navbar-logo"
-          />
-          <span className="navbar-brand-text">StoryGenie</span>
-        </a>
+            />
+            <span className="navbar-brand-text">StoryGenie</span>
+          </a>
           <button
             className="navbar-toggler"
             type="button"
