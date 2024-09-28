@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import './Input.css'; // We'll create this file for styling
+import './Input.css';
 
 interface InputData {
   theme: string;
-  characters: string;
-  moralLesson: string;
+  lesson: string;
 }
 
 const Input: React.FC = () => {
   const [inputData, setInputData] = useState<InputData>({
     theme: '',
-    characters: '',
-    moralLesson: '',
+    lesson: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,8 +24,7 @@ const Input: React.FC = () => {
     e.preventDefault();
     // Here you can add the logic to handle the storybook generation
     console.log('Theme:', inputData.theme);
-    console.log('Characters:', inputData.characters);
-    console.log('Moral Lesson:', inputData.moralLesson);
+    console.log('Lesson:', inputData.lesson);
     
     // You can replace this with your own logic to generate the storybook
     alert('Storybook generated! Check the console for details.');
@@ -37,7 +34,7 @@ const Input: React.FC = () => {
     <div className="input-container">
       <h1>Children's Storybook Generator</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="input-wrapper">
           <label htmlFor="theme">Theme:</label>
           <input
             type="text"
@@ -46,34 +43,22 @@ const Input: React.FC = () => {
             value={inputData.theme}
             onChange={handleInputChange}
             required
-            placeholder="e.g., Friendship, Adventure, Courage"
+            placeholder="e.g. Fantasy, Adventure, Coming-of-age"
           />
         </div>
-        <div>
-          <label htmlFor="characters">Characters:</label>
+        <div className="input-wrapper">
+          <label htmlFor="lesson">Lesson:</label>
           <input
             type="text"
-            id="characters"
-            name="characters"
-            value={inputData.characters}
+            id="lesson"
+            name="lesson"
+            value={inputData.lesson}
             onChange={handleInputChange}
             required
-            placeholder="e.g., A brave mouse, a wise owl"
+            placeholder="e.g. Kindess is contagious, Be the change in the world"
           />
         </div>
-        <div>
-          <label htmlFor="moralLesson">Moral Lesson:</label>
-          <input
-            type="text"
-            id="moralLesson"
-            name="moralLesson"
-            value={inputData.moralLesson}
-            onChange={handleInputChange}
-            required
-            placeholder="e.g., The importance of honesty"
-          />
-        </div>
-        <button type="submit">Generate</button>
+        <button className="button" type="submit">Generate</button>
       </form>
     </div>
   );

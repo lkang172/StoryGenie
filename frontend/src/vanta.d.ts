@@ -1,7 +1,5 @@
-declare module 'vanta/dist/vanta.globe.min' {
-    import { Vanta } from 'vanta';
-  
-    export default function VANTA_GLOBE(options: {
+declare module "vanta/dist/vanta.birds.min" {
+    export default function BIRDS(options: {
       el: HTMLElement;
       mouseControls?: boolean;
       touchControls?: boolean;
@@ -16,7 +14,10 @@ declare module 'vanta/dist/vanta.globe.min' {
       colorMode?: string;
       speedLimit?: number;
       cohesion?: number;
-      // Add other options as needed
-    }): Vanta;
+    }): {
+      setOptions: (options: object) => void;
+      resize: () => void;
+      destroy: () => void;
+    };
   }
   
