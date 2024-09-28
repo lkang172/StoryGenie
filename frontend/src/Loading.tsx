@@ -1,9 +1,12 @@
 import React from 'react';
 import './Loading.css';
 
-const Loading = () => {
+const Loading: React.FC = () => {
   return (
-    <h1>test</h1>
+    <div className="loading-container">
+      <h2 className="h2Home">Loading...</h2>
+      <div className="spinner"></div>
+    </div>
   );
 };
 
