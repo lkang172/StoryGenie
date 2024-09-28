@@ -514,8 +514,23 @@ app.get("/api/user/:userId", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.json({ username: user.username, name: user.name, books: user.books });
+    console.log("Sending user data:", user);
   } catch (error) {
     console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/books/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId).populate('books');
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user.books);
+  } catch (error) {
+    console.error("Error fetching books:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
