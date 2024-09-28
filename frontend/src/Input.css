@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+
+:root {
+  --primary-color: #8A4FFF;
+  --secondary-color: #00E6C3;
+  --tertiary-color: #FF9F1C;
+  --accent-color: #FF4365;
+  --background-color: #F0E6FF;
+  --text-color: #2D1E2F;
+  --light-gray: #E9ECEF;
+  --dark-gray: #6C757D;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.input-container {
+  max-width: 1100px;
+  min-height: 550px;
+  margin: 0 auto;
+  margin-top: 90px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(138, 79, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 3;
+}
+
+h1 {
+  text-align: center;
+  color: black;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+label {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 1.2em;
+  align-self: flex-start;
+}
+
+input {
+  padding: 15px;
+  margin-bottom: 30px;
+  border: 2px solid var(--light-gray);
+  border-radius: 8px;
+  font-size: 1.1em;
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(138, 79, 255, 0.2);
+}
+
+input::placeholder {
+  color: var(--dark-gray);
+}
+
+.button {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16px 24px;
+  width: 200px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  cursor: pointer;
+}
+
+.loginbutton {
+  left: 50%;
+  padding: 16px 24px;
+  width: 200px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  cursor: pointer;
+
+}
+
+.loginbutton:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+.button:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.loginbutton:active {
+  transform: translateX(-50%) scale(0.98);
+}
+.button:active {
+  transform: translateX(-50%) scale(0.98);
+}
+
+.success-message {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+
+.alert {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.suse {
+  font-family: "SUSE", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.input-container::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+  
+  .input-container::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 200px;
+    height: 200px;
+    background-color: var(--tertiary-color);
+    border-radius: 50%;
+    opacity: 0.1;
+  }
