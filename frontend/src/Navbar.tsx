@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import logo from "./logo.png";
 import "./navbar.css";
 
 const Navbar = () => {
@@ -8,9 +9,15 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
-            StoryGenie
-          </a>
+        <a className="navbar-brand" href="#">
+          <img 
+            src={logo}  
+              alt="StoryGenie Logo" 
+              height="30" 
+              className="d-inline-block align-top navbar-logo"
+          />
+          <span className="navbar-brand-text">StoryGenie</span>
+        </a>
           <button
             className="navbar-toggler"
             type="button"
