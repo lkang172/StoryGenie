@@ -12,6 +12,8 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Create from "./Create";
 import Login from "./Login";
+import Loading from "./Loading";
+import Output from "./Output";
 import "./App.css";
 
 function App() {
@@ -42,6 +44,18 @@ function App() {
         />
       </Routes>
     </Router>
+    <>
+      <Router>
+        <Navbar></Navbar>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/loading" element={<Loading />} />
+          <Route path="/output" element={<Output />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
