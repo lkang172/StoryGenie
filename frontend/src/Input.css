@@ -104,11 +104,33 @@ input::placeholder {
   cursor: pointer;
 }
 
+.loginbutton {
+  left: 50%;
+  padding: 16px 24px;
+  width: 200px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  cursor: pointer;
+
+}
+
+.loginbutton:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
 .button:hover {
   background-color: var(--secondary-color);
   color: var(--text-color);
 }
 
+.loginbutton:active {
+  transform: translateX(-50%) scale(0.98);
+}
 .button:active {
   transform: translateX(-50%) scale(0.98);
 }
