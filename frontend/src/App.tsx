@@ -1,15 +1,24 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import Navbar from "./Navbar";
+import Home from "./Home";
+import Profile from "./Profile";
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1>Hello world</h1>
-      <h2>Hello world again!</h2>
-      <h2>hello again</h2>
+      <Router>
+        <Navbar></Navbar>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Router>
     </>
   );
 }
