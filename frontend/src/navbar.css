@@ -35,4 +35,16 @@
     margin: 10px;
   }
 
+  .btn-outline-success {
+    color: #8b53ff !important;
+    border-color: #8b53ff !important;
+  }
+  .btn-outline-success:hover {
+    color: #fff !important;
+    background-color: #8b53ff !important;
+  }
+
+  .btn-profile:hover .fa-user {
+    color: white !important;
+  }
 
