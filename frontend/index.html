@@ -14,6 +14,7 @@
       body {
           margin: 0;
           font: normal 75% Arial, Helvetica, sans-serif;
+          overflow: hidden;
       }
 
       canvas {
@@ -71,16 +72,13 @@
   <div id="particles-js"></div>
   
   <!-- Stats - count particles -->
-  <div class="count-particles">
-      <span class="js-count-particles">--</span> particles
-  </div>
   
   <!-- Particles.js library -->
   <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
   
   <!-- Stats.js library -->
   <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
-  
+  <script type="module" src="/src/main.tsx"></script>
   <script>
       particlesJS("particles-js", {
           "particles": {
@@ -211,6 +209,6 @@
       requestAnimationFrame(update);
   </script>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    
   </body>
 </html>

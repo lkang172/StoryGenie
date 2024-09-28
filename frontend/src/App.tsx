@@ -1,11 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import Navbar from "./Navbar";
-import Home from "./Home";
+import Home from "./Home.tsx";
 import Profile from "./Profile";
 import Create from "./Create";
 import "./App.css";
+import HomeContainer from "./HomeContainer";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
