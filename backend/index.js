@@ -535,6 +535,25 @@ app.get("/api/books/:userId", async (req, res) => {
   }
 });
 
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+  console.log(req.body);
+  try {
+    const user = await User.findOne({ username });
+    if (!user || user.password !== password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      name: user.name,
+      // Include any other relevant user data, but be cautious about sensitive information
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 app.listen(3000, () => {
   connectDB();
   console.log("Server is running");

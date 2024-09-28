@@ -14,16 +14,29 @@ interface UserData {
   books: string[]; // Array of book IDs
 }
 
-const Profile = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
+interface User {
+  _id: string;
+  username: string;
+  name: string;
+  // Add other user properties as needed
+}
+
+interface ProfileProps {
+  user: User | null;
+}
+
+const Profile: React.FC<ProfileProps> = ({ user }) => {
+  const [userData, setUserData] = useState<UserData | null>();
   const [books, setBooks] = useState<Book[]>([]);
-  const userId = "66f75766ff74160b9d338926"; // This should be dynamically set based on your authentication system
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!user) return;
+
       try {
+        // Fetch updated user data
         const response = await fetch(
-          `http://localhost:3000/api/user/${userId}`
+          `http://localhost:3000/api/user/${user._id}`
         );
         if (!response.ok)
           throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -32,7 +45,7 @@ const Profile = () => {
 
         // Fetch books data
         const booksResponse = await fetch(
-          `http://localhost:3000/api/books/${userId}`
+          `http://localhost:3000/api/books/${user._id}`
         );
         if (!booksResponse.ok)
           throw new Error(`HTTP Error! Status: ${booksResponse.status}`);
@@ -44,7 +57,7 @@ const Profile = () => {
     };
 
     fetchUserData();
-  }, [userId]);
+  }, [user]);
 
   if (!userData) {
     return <div>Loading...</div>;

@@ -1,26 +1,47 @@
-import { useState } from "react";
+// App.tsx
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import { User } from "./types";
 import Navbar from "./Navbar";
-import Home from "./Home.tsx";
+import Home from "./Home";
 import Profile from "./Profile";
 import Create from "./Create";
+import Login from "./Login";
 import "./App.css";
-import HomeContainer from "./HomeContainer";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState<User | null>(null);
+
+  const handleLogin = (userData: User) => {
+    setUser(userData);
+  };
 
   return (
-    <>
-      <Router>
-        <Navbar></Navbar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={
+            user ? <Navigate to="/profile" /> : <Login onLogin={handleLogin} />
+          }
+        />
+        <Route
+          path="/create"
+          element={user ? <Create user={user} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/profile"
+          element={user ? <Profile user={user} /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </Router>
   );
 }
 
