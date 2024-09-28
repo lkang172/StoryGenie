@@ -49,8 +49,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       });
       if (response.ok) {
         const userData = await response.json();
-        onLogin(userData); // Automatically log in after signup
-        navigate("/profile"); // Redirect after signup/login
+        alert(
+          `Welcome, ${registerUsername}! Please login with your username and password.`
+        );
+        navigate("/login"); // Redirect after signup/login
+        setRegisterUsername("");
+        setRegisterPassword("");
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Login failed"); // Display error to the user
@@ -61,15 +65,16 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="input-container">
-      {/* Login Form */}
+    <div className="loginInput-container">
       <form onSubmit={handleSubmit}>
+        <h2>Login</h2>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
           required
+          className="loginInput"
         />
         <input
           type="password"
@@ -77,21 +82,25 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
           required
+          className="loginInput"
         />
-        {error && <p className="error">Login failed</p>}
+        {error && (
+          <p className="error">Login failed: Invalid username or password</p>
+        )}
         <button type="submit" className="loginbutton">
           Login
         </button>
       </form>
 
-      {/* Signup Form */}
       <form onSubmit={handleSignUp}>
+        <h2>Register</h2>
         <input
           type="text"
           value={registerUsername}
           onChange={(e) => setRegisterUsername(e.target.value)}
           placeholder="Username"
           required
+          className="loginInput"
         />
         <input
           type="password"
@@ -99,6 +108,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           onChange={(e) => setRegisterPassword(e.target.value)}
           placeholder="Password"
           required
+          className="loginInput"
         />
         {error && <p className="error">{error}</p>}
         <button type="submit" className="loginbutton">

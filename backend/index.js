@@ -30,7 +30,7 @@ app.post("/api/signup", async (req, res) => {
     return res.status(400).json({ message: "User already exists" });
   }
   try {
-    const user = new User({ username, password });
+    const user = new User({ username, password, books: [] });
 
     await user.save();
     console.log("User saved successfully");
