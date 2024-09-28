@@ -42,20 +42,10 @@ function App() {
           path="/profile"
           element={user ? <Profile user={user} /> : <Navigate to="/login" />}
         />
+        <Route path="/loading" element={<Loading />} />
+        <Route path="/output" element={<Output />} />
       </Routes>
     </Router>
-    <>
-      <Router>
-        <Navbar></Navbar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create" element={<Create />} />
-          <Route path="/loading" element={<Loading />} />
-          <Route path="/output" element={<Output />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </Router>
-    </>
   );
 }
 
