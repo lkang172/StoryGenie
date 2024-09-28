@@ -71,7 +71,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           alt={userData.name || "User"}
           className="profile-photo"
         />
-        <h1 className="profile-name">{userData.name}</h1>
+        <h1 className="profile-name">Welcome, {userData.username}</h1>
         <p className="profile-username">@{userData.username}</p>
         <p className="profile-bio">
           A passionate storyteller and children's book author.

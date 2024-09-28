@@ -23,7 +23,8 @@ app.use(express.urlencoded({ extended: true }));
 const cohere = new CohereClient({ token: process.env.COHERE_KEY });
 
 app.post("/api/signup", async (req, res) => {
-  const { name, username, password } = req.body;
+  const { username, password } = req.body;
+  console.log(req.body);
   const existingUser = await User.findOne({ username });
   if (existingUser) {
     return res.status(400).json({ message: "User already exists" });

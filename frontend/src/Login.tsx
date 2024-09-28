@@ -10,6 +10,8 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [registerUsername, setRegisterUsername] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,19 +26,43 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (response.ok) {
         const userData = await response.json();
         onLogin(userData);
-        navigate("/profile"); // or wherever you want to redirect after login
+        navigate("/profile"); // Redirect after login
       } else {
         const errorData = await response.json();
-        console.error("Login failed:", errorData.message);
-        // Handle login error (e.g., show error message to user)
+        setError(errorData.message); // Display error to the user
       }
     } catch (error) {
       console.error("Login error:", error);
-      // Handle network or other errors
     }
   };
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: registerUsername,
+          password: registerPassword,
+        }), // Use signup state variables
+      });
+      if (response.ok) {
+        const userData = await response.json();
+        onLogin(userData); // Automatically log in after signup
+        navigate("/profile"); // Redirect after signup/login
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Login failed"); // Display error to the user
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
+  };
+
   return (
     <div className="input-container">
+      {/* Login Form */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -52,8 +78,32 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           placeholder="Password"
           required
         />
+        {error && <p className="error">Login failed</p>}
+        <button type="submit" className="loginbutton">
+          Login
+        </button>
+      </form>
+
+      {/* Signup Form */}
+      <form onSubmit={handleSignUp}>
+        <input
+          type="text"
+          value={registerUsername}
+          onChange={(e) => setRegisterUsername(e.target.value)}
+          placeholder="Username"
+          required
+        />
+        <input
+          type="password"
+          value={registerPassword}
+          onChange={(e) => setRegisterPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
         {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+        <button type="submit" className="loginbutton">
+          Register
+        </button>
       </form>
     </div>
   );
