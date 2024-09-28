@@ -107,12 +107,11 @@ input::placeholder {
 .loginbutton {
   left: 50%;
   padding: 16px 24px;
-  width: 200px;
   background-color: var(--primary-color);
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.1s ease;
   cursor: pointer;
@@ -128,9 +127,6 @@ input::placeholder {
   color: var(--text-color);
 }
 
-.loginbutton:active {
-  transform: translateX(-50%) scale(0.98);
-}
 .button:active {
   transform: translateX(-50%) scale(0.98);
 }
@@ -174,4 +170,68 @@ input::placeholder {
     background-color: var(--tertiary-color);
     border-radius: 50%;
     opacity: 0.1;
+  }
+
+  .loginInput-container::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+  
+  .loginInput-container::after {
+    content: '';
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 200px;
+    height: 200px;
+    background-color: var(--tertiary-color);
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+
+  .loginInput {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 1.1em;
+    background-color: var(--light-gray);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+  }
+  
+  .loginInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(138, 79, 255, 0.2);
+  }
+  
+  .loginInput::placeholder {
+    color: var(--dark-gray);
+  }
+  
+  .loginInput-container {
+    width: 45vw;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 40px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(138, 79, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 3;
+  }
+
+  .error {
+    color: black;
+    font-size: 15px;
   }
