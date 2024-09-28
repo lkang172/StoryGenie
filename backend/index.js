@@ -56,17 +56,18 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-app.post("/api/create/:id", async (req, res) => {
+app.post("/api/create", async (req, res) => {
   const { theme, lessons } = req.body;
-  const { id } = req.params;
+  const { id } = req.query;
   try {
     const story = await generateStory(theme, lessons);
     const characters = await generateCharacters(story);
     const scenes = await generateScenes(story);
     const images = await generateImages(scenes, characters);
     const title = await generateTitle(story);
+    const storyScene = await splitSentencesPerPage(story, 6);
     try {
-      const user = await User.findById({ id });
+      const user = await User.findById(id);
       const newBook = new Books({
         title: title,
         dateCreated: new Date(),
@@ -82,8 +83,8 @@ app.post("/api/create/:id", async (req, res) => {
       console.error("Error:", error);
     }
 
-    console.log(scenes);
-    return res.status(200).json({ message: { story, characters } });
+    console.log(storyScene);
+    return res.status(200).json({ message: { storyScene, images } });
   } catch (error) {
     console.error("Error:", error);
   }
@@ -142,8 +143,8 @@ const generateStory = async (theme, lessons) => {
   ------
 
   Write me a children's story about with the theme being ${theme} having ${lessons} as life lessons in 10 sentences or less.
-  It should be a story teaching the child ${lessons} life lessons with a moral at the end. Kindly have anywhere between a grade 4 and grade 6 reading level.
-  Generated characters with names for each of the to make it an immersive experience.
+  It should be a story teaching the child ${lessons} life lessons with a moral at the end. Kindly have anywhere between a grade 4 and grade 6 reading level. Also please don't include any preambles, introductory text or any titles.
+  Generate characters with names for each of the to make it an immersive experience.
   `;
   const cohere = new CohereClient({
     token: process.env.COHERE_KEY,
@@ -156,7 +157,7 @@ const generateStory = async (theme, lessons) => {
       maxTokens: 600,
       temperature: 0.4,
     });
-    console.log(response);
+    // console.log(response);
     return response.generations[0].text;
   } catch (error) {
     console.error("Error:", error);
@@ -247,7 +248,7 @@ const generateCharacters = async (story) => {
           role: splitPrompt[1],
         };
       });
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (error) {
     console.error("Error:", error);
@@ -342,7 +343,6 @@ extract six scenes from the story and generate an additional scene for the moral
     const scenes = response.generations[0].text;
     const characters = await generateCharacters(story);
     const scenesArray = scenes.split("<scene>");
-    console.log(scenesArray);
     const filteredScenes = scenesArray
       .map((scene) => scene.replace(/\n+/g, " ").trim())
       .filter((scene) => scene.length > 0)
@@ -362,7 +362,7 @@ extract six scenes from the story and generate an additional scene for the moral
 const generateImages = async (scenes, characters) => {
   const options = {
     method: "POST",
-    url: "https://api.monsterapi.ai/v1/generate/sdxl-base",
+    url: "https://api.monsterapi.ai/v1/generate/txt2img",
     headers: {
       accept: "application/json",
       "content-type": "application/json",
@@ -495,13 +495,105 @@ const generateTitle = async (story) => {
     });
     const title = response.generations[0].text;
     const extractedTitle = title.substring(8, title.length);
-    console.log(extractedTitle);
+    // console.log(extractedTitle);
     return extractedTitle;
   } catch (error) {
     console.error("Error:", error);
   }
 };
 
+const generateStoryScenes = async (scenes, story) => {
+  const prompt = `You're bot whose great at extracting sentences from a story that visually depict a given scene.
+  
+  Examples:
+  Below is a story followed by a set of scenes presented in an array. For each scene, extract the **exact sentence(s)** from the story that match the scene. Do not summarize or rewrite. Use only sentences **directly** from the story.
+  Story:
+  Once upon a time, in a magical forest, there grew a mysterious mushroom. The mushroom was no ordinary fungus, for it had the power to reveal the future. Those who were brave enough to pluck the mushroom and eat it would gain insight into what tomorrow may bring. Some believed that the mushroom brought good luck, while others were skeptical, claiming that it was just a myth. A young girl named Lily wanted to find out for herself. She ventured deep into the forest, searching for the mysterious mushroom. At last, she found it, glowing brightly in the shadows. With a hesitant heart, she plucked it and brought it home. Her parents were skeptical, but they let her eat it anyway. That night, Lily had the most amazing dreams. She saw herself doing things she had never done before, meeting new people, and going on adventures. When she woke up, she knew that the mushroom had given her a glimpse of her future. From that day on, Lily visited the magical forest often, seeking out the mysterious mushroom. Each time she ate it, she gained a little more insight into what her future held. She knew that it was not just a myth, but a powerful tool that could help her make the most of her life.
+
+  [Once upon a time, in a magical forest, there grew a mysterious mushroom,
+  The mushroom had the power to reveal the future,
+  The girl ventured into the forest,
+  The girl found the mushroom and brought the mushroom home,
+  The girl ate the mushroom and had amazing dreams,
+  From that day on, the girl visited the magical forest often, seeking out the mysterious mushroom]
+
+  For each scene, return the **exact** sentence(s) from the story without any changes.
+
+  <storyScene> Once upon a time, in a magical forest, there grew a mysterious mushroom.
+  <storyScene> The mushroom was no ordinary fungus, for it had the power to reveal the future. Those who were brave enough to pluck the mushroom and eat it would gain insight into what tomorrow may bring. Some believed that the mushroom brought good luck, while others were skeptical, claiming that it was just a myth.
+  <storyScene> A young girl named Lily wanted to find out for herself. She ventured deep into the forest, searching for the mysterious mushroom.
+  <storyScene> With a hesitant heart, she plucked it and brought it home.
+  <storyScene> Her parents were skeptical, but they let her eat it anyway. That night, Lily had the most amazing dreams. She saw herself doing things she had never done before, meeting new people, and going on adventures. When she woke up, she knew that the mushroom had given her a glimpse of her future.
+  <storyScene> From that day on, Lily visited the magical forest often, seeking out the mysterious mushroom. Each time she ate it, she gained a little more insight into what her future held. She knew that it was not just a myth, but a powerful tool that could help her make the most of her life.
+
+  ------
+  Below is a story followed by a set of scenes. For each scene, please extract the most relevant sentence(s) from the story that matches that scene.
+
+  Story:
+  Once upon a time, there was a peaceful kingdom that was often visited by a powerful wizard. One day, the wizard was flying over the kingdom's castle when he saw a strange cloud formation in the distance. As he got closer, he realized that it was not a cloud at all, but a giant dragon! The dragon was flying towards the castle, and the wizard could see that it was causing a huge thunderstorm. The dragon's wings were beating so hard that they were creating strong winds, and its fiery breath was turning the rain into huge bolts of lightning. The wizard knew he had to do something to stop the dragon, so he cast a powerful spell that made the dragon's wings too heavy to fly. The dragon crashed to the ground, and the thunderstorm finally stopped. The wizard was a hero, and the kingdom was safe once again. The people of the kingdom thanked the wizard for his bravery and for saving their kingdom from the dragon's thunderstorm.
+
+  [A peaceful kingdom was often visited by a powerful wizard,
+  The wizard saw a strange cloud formation in the distance,
+  The dragon was flying towards the castle, and the wizard could see that the dragon was causing a huge thunderstorm,
+  The wizard cast a powerful spell that made the dragon's wings too heavy to fly,
+  The dragon crashed to the ground, and the thunderstorm finally stopped,
+  The wizard was a hero, and the kingdom was safe once again]
+
+  For each scene, return the **exact** sentence(s) from the story without any changes.
+
+  <storyScene> Once upon a time, there was a peaceful kingdom that was often visited by a powerful wizard.
+  <storyScene> One day, the wizard was flying over the kingdom's castle when he saw a strange cloud formation in the distance.
+  <storyScene> As he got closer, he realized that it was not a cloud at all, but a giant dragon! The dragon was flying towards the castle, and the wizard could see that it was causing a huge thunderstorm. The dragon's wings were beating so hard that they were creating strong winds, and its fiery breath was turning the rain into huge bolts of lightning.
+  <storyScene> The wizard knew he had to do something to stop the dragon, so he cast a powerful spell that made the dragon's wings too heavy to fly.
+  <storyScene> The dragon crashed to the ground, and the thunderstorm finally stopped.
+  <storyScene> The people of the kingdom thanked the wizard for his bravery and for saving their kingdom from the dragon's thunderstorm.
+  
+  ----
+  Below is a story followed by a set of scenes presented in an array. For each scene, extract the **exact sentence(s)** from the story that match the scene. Do not summarize or rewrite. Use only sentences **directly** from the story.
+  Story:
+  ${story}
+  ${scenes}
+  For each scene, return the **exact** sentence(s) from the story without any changes.
+  `;
+  const cohere = new CohereClient({ token: process.env.COHERE_KEY });
+  try {
+    const response = await cohere.generate({
+      prompt: prompt,
+      model: "command-r-plus-04-2024",
+      maxTokens: 600,
+      temperature: 0.4,
+    });
+    const storyScenes = response.generations[0].text;
+    const storyScenesArray = storyScenes.split("<storyScene>");
+    const storyScenesFiltered = storyScenesArray
+      .map((storyScene) => storyScene.trim())
+      .filter((storyScene) => storyScene.length > 0);
+    console.log(storyScenesFiltered);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+const splitSentencesPerPage = async (story, numPages) => {
+  const sentences = story.match(/[^\.!\?]+[\.!\?]+/g);
+  console.log("Story:", story);
+  const numSentencesPerPage = Math.ceil(sentences.length / numPages);
+
+  const pages = [];
+  for (let i = 0; i < numPages; i++) {
+    const pageSentences = sentences.slice(
+      i * numSentencesPerPage,
+      (i + 1) * numSentencesPerPage
+    );
+    const pageText = pageSentences.join(" ");
+    pages.push(pageText);
+  }
+  const filteredPages = pages
+    .map((page) => page.trim())
+    .filter((page) => page.length > 0);
+  console.log("Pages Array:", filteredPages);
+  return filteredPages;
+};
 app.listen(3000, () => {
   connectDB();
   console.log("Server is running");
