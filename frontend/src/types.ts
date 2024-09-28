@@ -1,8 +1,9 @@
+// types.ts
 export interface User {
     _id: string;
     username: string;
     name: string;
-    books: string[]; // Array of book ObjectId strings
+    books: string[];
     createdAt: string;
     updatedAt: string;
   }

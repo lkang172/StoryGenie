@@ -15,6 +15,7 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
@@ -28,7 +29,7 @@ app.post("/api/signup", async (req, res) => {
     return res.status(400).json({ message: "User already exists" });
   }
   try {
-    const user = new User({ name, username, password });
+    const user = new User({ username, password });
 
     await user.save();
     console.log("User saved successfully");
@@ -40,23 +41,24 @@ app.post("/api/signup", async (req, res) => {
 });
 
 app.post("/api/login", async (req, res) => {
+  console.log(req.body); // Log to check request body
   const { username, password } = req.body;
-
-  const existingUser = await User.findOne({ username });
-  console.log(existingUser);
-  if (!existingUser) {
-    return res.status(400).json({ message: "Please enter valid details" });
-  }
   try {
-    if (password == existingUser.password) {
-      return res
-        .status(200)
-        .json({ message: "Logged In succesfully", username });
-    } else {
-      return res.status(400).json({ message: "Please enter valid details" });
+    const user = await User.findOne({ username });
+    if (!user || user.password !== password) {
+      return res.status(400).json({ message: "Invalid credentials" });
     }
+    res.status(200).json({
+      _id: user._id,
+      username: user.username,
+      name: user.name,
+      books: user.books,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    });
   } catch (error) {
-    return res.status(500).json({ message: "Invalid Entry" });
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -531,25 +533,6 @@ app.get("/api/books/:userId", async (req, res) => {
     res.json(user.books);
   } catch (error) {
     console.error("Error fetching books:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
-  console.log(req.body);
-  try {
-    const user = await User.findOne({ username });
-    if (!user || user.password !== password) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-    res.status(200).json({
-      _id: user._id,
-      username: user.username,
-      name: user.name,
-      // Include any other relevant user data, but be cautious about sensitive information
-    });
-  } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 });
