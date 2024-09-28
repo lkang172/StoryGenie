@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import "./navbar.css";
 
 const Navbar = () => {
   return (
@@ -40,14 +41,15 @@ const Navbar = () => {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <button
+              <Link
+                to="/profile"
                 className="btn btn-outline-success"
                 type="submit"
                 style={{ marginLeft: 10 }}
               >
                 Profile
                 <FontAwesomeIcon icon={faUser} style={{ marginLeft: 10 }} />
-              </button>
+              </Link>
             </form>
           </div>
         </div>
