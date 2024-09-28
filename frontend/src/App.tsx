@@ -24,6 +24,7 @@ function App() {
   };
 
   return (
+<<<<<<< HEAD
     <Router>
       <Navbar />
       <Routes>
@@ -44,18 +45,36 @@ function App() {
         />
       </Routes>
     </Router>
+=======
     <>
       <Router>
-        <Navbar></Navbar>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/create" element={<Create />} />
+          <Route
+            path="/login"
+            element={
+              user ? (
+                <Navigate to="/profile" />
+              ) : (
+                <Login onLogin={handleLogin} />
+              )
+            }
+          />
+          <Route
+            path="/create"
+            element={user ? <Create user={user} /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/profile"
+            element={user ? <Profile user={user} /> : <Navigate to="/login" />}
+          />
           <Route path="/loading" element={<Loading />} />
           <Route path="/output" element={<Output />} />
-          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>
+>>>>>>> lucas-branch
   );
 }
 
