@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Suse:wght@400;600;700&display=swap');
 
 :root {
   --primary-color: #8A4FFF;
@@ -12,85 +14,50 @@
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Suse', serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
 }
 
 .home-container {
-  max-width: 1100px;
-  min-height: 550px;
+  height:auto;
   margin: 0 auto;
   margin-top: 30px;
   padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 0 25px rgba(138, 79, 255, 0.1);
   position: relative;
   overflow: hidden;
   z-index: 3;
+  width: 50vw;
 }
 
-h1 {
-  text-align: center;
-  color: var(--background-color);
-  font-size: 2.5em;
-  font-weight: 700;
-  margin-bottom: 30px;
+.h1Home {
+  font-size: 7em;
+  text-align: left;
+  background: linear-gradient(45deg, white, #cfb6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+p {
+  margin-top: 10px;
+  color: white;
+  font-size: 2em;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 20px;
+p {
+  animation: fadeIn 1s ease-out;
 }
-
-label {
-  margin-top: 15px;
-  margin-bottom: 10px;
-  font-weight: 600;
-  color: var(--text-color);
-  font-size: 1.2em;
-  align-self: flex-start;
-}
-
-input {
-  padding: 15px;
-  margin-bottom: 30px;
-  border: 2px solid var(--light-gray);
-  border-radius: 8px;
-  font-size: 1.1em;
-  background-color: var(--light-gray);
-  color: var(--text-color);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  width: 100%;
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(138, 79, 255, 0.2);
-}
-
-input::placeholder {
-  color: var(--dark-gray);
-}
-
-.button {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+.buttonHome {
+  position: relative;
+  margin-top: 20px;
   padding: 16px 24px;
   width: 200px;
   background-color: var(--primary-color);
@@ -101,25 +68,16 @@ input::placeholder {
   font-weight: 600;
   transition: background-color 0.3s ease, transform 0.1s ease;
   cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.button:hover {
+.buttonHome:hover {
   background-color: var(--secondary-color);
   color: var(--text-color);
 }
 
-.button:active {
-  transform: translateX(-50%) scale(0.98);
-}
-
-.success-message {
-  color: var(--secondary-color);
-  font-weight: 600;
-}
-
-.alert {
-  color: var(--accent-color);
-  font-weight: 600;
+.buttonHome:active {
+  transform: scale(0.98);
 }
 
 .suse {
@@ -128,27 +86,3 @@ input::placeholder {
   font-weight: 400;
   font-style: normal;
 }
-
-.input-container::before {
-    content: '';
-    position: absolute;
-    top: -100px;
-    left: -100px;
-    width: 200px;
-    height: 200px;
-    background-color: var(--secondary-color);
-    border-radius: 50%;
-    opacity: 0.1;
-  }
-  
-  .input-container::after {
-    content: '';
-    position: absolute;
-    bottom: -100px;
-    right: -100px;
-    width: 200px;
-    height: 200px;
-    background-color: var(--tertiary-color);
-    border-radius: 50%;
-    opacity: 0.1;
-  }
