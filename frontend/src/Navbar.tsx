@@ -34,11 +34,6 @@ const Navbar = () => {
                   Create
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="profile">
-                  About
-                </Link>
-              </li>
             </ul>
             <form className="d-flex" role="search">
               <Link
