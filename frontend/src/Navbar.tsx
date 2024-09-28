@@ -41,16 +41,26 @@ const Navbar = () => {
                   CREATE
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to="loading">
+                  LOADING
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link active" to="output">
+                  OUTPUT
+                </Link>
+              </li>
             </ul>
             <form className="d-flex" role="search">
               <Link
                 to="/profile"
-                className="btn btn-outline-success"
+                className="btn btn-outline-success btn-profile"
                 type="submit"
                 style={{ marginLeft: 10 }}
               >
                 Profile
-                <FontAwesomeIcon icon={faUser} style={{ marginLeft: 10 }} />
+                <FontAwesomeIcon icon={faUser} style={{ marginLeft: 10 }} color="#8b53ff" />
               </Link>
             </form>
           </div>
