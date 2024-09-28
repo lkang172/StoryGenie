@@ -47,8 +47,8 @@ function App() {
             path="/profile"
             element={user ? <Profile user={user} /> : <Navigate to="/login" />}
           />
-          {/*<Route path="/loading" element={<Loading />} />
-          <Route path="/output" element={<Output />} />*/}
+          <Route path="/loading" element={<Loading />} />
+          <Route path="/output" element={<Output />} />
         </Routes>
       </Router>
     </>
