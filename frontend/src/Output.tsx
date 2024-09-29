@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import Storybook from "./components/Storybook";
+import "./Output.css";
 
 const Output: React.FC = () => {
   const location = useLocation();
@@ -11,11 +11,18 @@ const Output: React.FC = () => {
 
   return (
     <div className="output-container">
-      {storybook ? (
-        <Storybook />
-      ) : (
-        <p>No storybook available. Please generate one first</p>
-      )}
+      <center>
+        <h1>Your Generated Storybook</h1>
+        {storybook.storyScene.map((scene: string, index: number) => (
+          <div key={index} className="story-section">
+            <h2>Page {index + 1}:</h2>
+            <p>{scene}</p>
+            {storybook.images[index] && (
+              <img src={storybook.images[index]} alt={`Scene ${index + 1}`} />
+            )}
+          </div>
+        ))}
+      </center>
     </div>
   );
 };
