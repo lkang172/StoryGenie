@@ -611,6 +611,29 @@ app.get("/api/books/:userId", async (req, res) => {
   }
 });
 
+app.post("/api/books/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const newBook = req.body;  // This is the generated storybook being sent from the frontend
+    
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.books.push(newBook);
+    
+    await user.save();
+
+    res.status(200).json({ message: "Book added to user's collection" });
+  } catch (error) {
+    console.error("Error adding book:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 const splitSentencesPerPage = async (story, numPages) => {
   const sentences = story.match(/[^\.!\?]+[\.!\?]+/g);
   console.log("Story:", story);

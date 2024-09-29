@@ -12,9 +12,9 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Create from "./Create";
 import Login from "./Login";
+import "./App.css";
 import Loading from "./Loading";
 import Output from "./Output";
-import "./App.css";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
