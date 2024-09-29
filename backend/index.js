@@ -84,14 +84,16 @@ app.post("/api/create", async (req, res) => {
       if (!user.books) {
         user.books = [];
       }
-      user.books.push(newBook._id);
+      if (!user.books.includes(title)){
+        user.books.push(newBook.title);
+      }
       await user.save();
     } catch (error) {
       console.error("Error:", error);
     }
 
     console.log(storyScene);
-    return res.status(200).json({ message: { storyScene, images } });
+    return res.status(200).json({ message: { storyScene, images, title } });
   } catch (error) {
     console.error("Error:", error);
   }
@@ -599,7 +601,8 @@ app.get("/api/user/:userId", async (req, res) => {
 app.get("/api/books/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
-    const user = await User.findById(userId).populate('books');
+    const user = await User.findById(req.params.userId).populate("books");
+    
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

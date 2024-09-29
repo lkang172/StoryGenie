@@ -10,6 +10,13 @@
     margin-bottom: 12.5px;
 }
 
+.no-highlight {
+    user-select: none; /* For modern browsers */
+    -webkit-user-select: none; /* For Safari */
+    -moz-user-select: none; /* For Firefox */
+    -ms-user-select: none; /* For Internet Explorer/Edge */
+}
+
 .navbar-brand-text {
     font-family: 'sans-serif', system-ui;
     font-size: 1.3em;

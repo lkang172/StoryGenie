@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import "./Input.css";
 import { useNavigate } from "react-router-dom";
+import { User } from "./types";
+import Loading from "./Loading";
 
 interface InputData {
   theme: string;
   lesson: string;
 }
 
-const Input: React.FC = () => {
+interface InputProps {
+  user: User | null; // Keep user prop to manage user authentication
+}
+
+const Input: React.FC<InputProps> = ({ user }) => {
   const [inputData, setInputData] = useState<InputData>({
     theme: "",
     lesson: "",
   });
 
-  // Call useNavigate here, at the top of the component
+  const [storybook, setStorybook] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,17 +31,58 @@ const Input: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you can add the logic to handle the storybook generation
-    console.log("Theme:", inputData.theme);
-    console.log("Lesson:", inputData.lesson);
 
-    // Navigate to the Loading page after handling input
-    navigate("/loading");
+    if (!user) {
+      console.error("User is not logged in.");
+      return; // Prevent submission if user is not logged in
+    }
 
-    // You can replace this with your own logic to generate the storybook
-    alert("Storybook generated! Check the console for details.");
+    setIsGenerating(true);
+    navigate("/loading", { state: { isGenerated: false } });
+
+    try {
+      const response = await fetch("http://localhost:3000/api/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      const trimmedImages = data.message.images.slice(
+        0,
+        data.message.storyScene.length
+      );
+
+      const generatedStorybook = {
+        ...data.message,
+        images: trimmedImages,
+      };
+      setStorybook(generatedStorybook);
+
+      // Add the generated storybook to the user's collection
+      await fetch(`http://localhost:3000/api/books/${user._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(generatedStorybook),
+      });
+
+      console.log("Storybook generated:", data.message);
+      setIsGenerating(false);
+      navigate("/output");
+    } catch (error) {
+      console.error("Error generating storybook:", error);
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -69,6 +117,20 @@ const Input: React.FC = () => {
           Generate
         </button>
       </form>
+
+      {storybook && (
+        <div className="storybook-preview">
+          <h2>Generated Storybook</h2>
+          {storybook.storyScene.map((scene, index) => (
+            <div key={index} className="scene">
+              <h2>{scene}</h2>
+              {storybook.images[index] && (
+                <img src={storybook.images[index]} alt={`Scene ${index + 1}`} />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

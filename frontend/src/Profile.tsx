@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
+import "./Input.css";
 
 interface Book {
   _id: string;
@@ -34,22 +35,22 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       if (!user) return;
 
       try {
-        // Fetch updated user data
         const response = await fetch(
           `http://localhost:3000/api/user/${user._id}`
         );
         if (!response.ok)
           throw new Error(`HTTP Error! Status: ${response.status}`);
         const data = await response.json();
+        console.log("User data:", data); // Log the user data
         setUserData(data);
 
-        // Fetch books data
         const booksResponse = await fetch(
           `http://localhost:3000/api/books/${user._id}`
         );
         if (!booksResponse.ok)
           throw new Error(`HTTP Error! Status: ${booksResponse.status}`);
         const booksData = await booksResponse.json();
+        console.log("Books data:", booksData); // Log the books data
         setBooks(booksData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,7 +68,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
     <div className="profile-container">
       <div className="profile-info">
         <img
-          src="https://via.placeholder.com/200"
+          src="https://media.istockphoto.com/id/1471399411/vector/genie-vector-logo.jpg?s=612x612&w=0&k=20&c=s2yLmHyX1f3O8cOy2iRMdaZ_Horu80TArq6ajHmzJ-g="
           alt={userData.name || "User"}
           className="profile-photo"
         />
@@ -78,17 +79,20 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className="books-container">
         <h2 className="books-title">My Books</h2>
         <div className="book-list">
-          {books.map((book) => (
-            <div key={book._id} className="book-item">
+          {books.map((book, index) => (
+            <div key={index} className="book-item">
               <img
-                src="https://re-mm-assets.s3.amazonaws.com/product_photo/46460/large_large_Poly_LightBlue_pms291up_1471509902.jpg"
+                src="https://images.pond5.com/magic-wiccan-old-book-cover-illustration-238909602_iconl_nowm.jpeg"
                 alt={`Book ${book.title}`}
                 className="book-cover"
               />
               <h3 className="book-title">{book.title}</h3>
               <p className="book-date">
-                Created on: {new Date(book.dateCreated).toLocaleDateString()}
+                Created on:{" "}
+                {new Date(book.dateCreated).toISOString().split("T")[0]}
               </p>
+
+              <button className="input-button">Open</button>
             </div>
           ))}
         </div>

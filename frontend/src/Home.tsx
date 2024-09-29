@@ -10,9 +10,9 @@ const Home = () => {
     <div className="home-container">
       <h1 className="h1Home">StoryGenie</h1>
       <p>
-        Tired of buying expensive books, but still know the importance of
-        reading with your kids? Look no further than StoryGenie: the AI
-        children's storybook creator of the future.
+        Tired of buying expensive books, but still value reading with your kids?
+        Look no further than StoryGenie: the AI children's storybook creator of
+        the future.
       </p>
       <button className="buttonHome" type="submit" onClick={handleCreateClick}>
         Create A Book
