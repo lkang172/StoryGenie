@@ -92,7 +92,7 @@ app.post("/api/create", async (req, res) => {
     }
 
     console.log(storyScene);
-    return res.status(200).json({ message: { storyScene, images } });
+    return res.status(200).json({ message: { storyScene, images, title } });
   } catch (error) {
     console.error("Error:", error);
   }
