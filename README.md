@@ -6,11 +6,11 @@ StoryGenie generates free picture books for families who otherwise can’t affor
 
 #Tech Stack
 
-Backend:  `ExpressJS `, `MongoDB`, `NodeJS`
-Frontend: `ReactJS`, `BootstrapCSS`
-Design: `Figma`
-Tools: `Git`, `MonsterAPI`, `CohereAPI`
-Languages: `TypeScript`, `JavaScript`, `HTML`, `CSS`
+Backend:  `ExpressJS `, `MongoDB`, `NodeJS`  
+Frontend: `ReactJS`, `BootstrapCSS`  
+Design: `Figma`  
+Tools: `Git`, `MonsterAPI`, `CohereAPI`  
+Languages: `TypeScript`, `JavaScript`, `HTML`, `CSS`  
 
 #How to run:
 
