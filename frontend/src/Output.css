@@ -1,10 +1,27 @@
 .output-container {
-    position: fixed;
-    top: 75px; /* Adjust this value to match your navbar height */
+    position: relative;
     left: 0;
     width: 100%;
-    height: calc(100% - 75px); /* Subtract navbar height */
+    height: auto; /* Subtract navbar height */
     z-index: 999;
+    background-color: white;
+    align-items: center;
+  }
+
+  .story-section p {
+    color: black;
+    font-size: 0.9999em;
+    width: 50%;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+  }
+
+  .story-section img {
+    width: 50%;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
   }
   
   .flipbook-iframe {

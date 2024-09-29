@@ -78,7 +78,7 @@ const Input: React.FC<InputProps> = ({ user }) => {
 
       console.log("Storybook generated:", data.message);
       setIsGenerating(false);
-      navigate("/output");
+      navigate("/output", { state: { storybook: generatedStorybook } });
     } catch (error) {
       console.error("Error generating storybook:", error);
       setIsGenerating(false);

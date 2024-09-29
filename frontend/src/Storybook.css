@@ -1,0 +1,19 @@
+
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .page.dragging {
+    transition: none;
+  }
+  
+  .page h2 {
+    margin-bottom: 20px;
+  }
+  
+  .page img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
