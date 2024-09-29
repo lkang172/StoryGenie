@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Input.css";
+import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
 
 const Input = () => {
@@ -72,6 +73,7 @@ const Input = () => {
         </div>
         <button type="submit">Generate</button>
       </form>
+      <Loading isGenerated={storybook === null} />
       {storybook && (
         <div className="storybook-preview">
           <h2>Generated Storybook</h2>
