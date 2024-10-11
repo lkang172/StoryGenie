@@ -38,6 +38,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
         const response = await fetch(
           `http://localhost:3000/api/user/${user._id}`
         );
+
         if (!response.ok)
           throw new Error(`HTTP Error! Status: ${response.status}`);
         const data = await response.json();
